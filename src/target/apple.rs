@@ -3,7 +3,7 @@ use super::TargetInfo;
 impl TargetInfo<'_> {
     pub(crate) fn apple_sdk_name(&self) -> &'static str {
         match (self.os, self.env) {
-            ("macos", "") => "macosx",
+            ("macos", _) => "macosx",
             ("ios", "") => "iphoneos",
             ("ios", "sim") => "iphonesimulator",
             ("ios", "macabi") => "macosx",
@@ -31,7 +31,7 @@ impl TargetInfo<'_> {
         // https://clang.llvm.org/docs/AttributeReference.html#availability
         // https://gcc.gnu.org/onlinedocs/gcc/Darwin-Options.html#index-mmacosx-version-min
         match (self.os, self.env) {
-            ("macos", "") => format!("-mmacosx-version-min={min_version}"),
+            ("macos", _) => format!("-mmacosx-version-min={min_version}"),
             ("ios", "") => format!("-miphoneos-version-min={min_version}"),
             ("ios", "sim") => format!("-mios-simulator-version-min={min_version}"),
             ("ios", "macabi") => format!("-mtargetos=ios{min_version}-macabi"),
